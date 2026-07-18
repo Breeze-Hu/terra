@@ -1,16 +1,16 @@
 # Changelog
 
-## version 1.9-38
+## version 1.9-39
 
 ### bug fixes
 
 - multidim vrt can now be opened
   [\#2107](https://github.com/rspatial/terra/issues/2107) by Michael
   Sumner
-- terra did not compile with GDAL \> 3.04 & \< 3.8
+- terra did not compile with GDAL \> 3.0.4 & \< 3.8
   [\#2109](https://github.com/rspatial/terra/issues/2109) by Andrew Gene
   Brown
-- terra did not compile with GDAL \< 3.5.0
+- terra did not compile with GDAL \< 3.5
   [\#2111](https://github.com/rspatial/terra/issues/2111) by Wolfgang
   Viechtbauer
 
@@ -23,6 +23,15 @@
   not on their geometry to the nearest location on the geometry
   (`inside=FALSE`) or to an alternative location that is inside the
   polygon (`inside=TRUE`)
+- `points`, `lines` and `polys` can now color the geometries by the
+  values of a variable (argument `y`)
+  [\#2119](https://github.com/rspatial/terra/issues/2119) by Márcia
+  Barbosa
+- `focal` can now use TBB parallelization for built-in functions “max”,
+  “min”, “median”, “modal” and “sd” (in addition to “sum”/“mean”)
+  [\#2115](https://github.com/rspatial/terra/issues/2115) by Breeze-Hu
+- `focal` with “min” or “max” and an unweighted window is now faster,
+  especially with large windows
 
 ### new
 
@@ -97,9 +106,9 @@ Released 2026-06-20
   Guélat
 - `netw` to create `SpatNetwork` objects. The network can be directed or
   undirected and is by default weighted by edge length.
-- `SpatNetwork` methods: `shortestPath`, ,
-  ``` writeNetwork``net_nodes ```, `net_edges`, `net_nnodes`,
-  `net_nedges`, `net_directed`, `net_weights` and `net_weights<-`.
+- `SpatNetwork` methods: `shortestPath`, `writeNetwork`, `net_nodes`,
+  `net_edges`, `net_nnodes`, `net_nedges`, `net_directed`, `net_weights`
+  and `net_weights<-`.
 
 ## version 1.9-27
 
