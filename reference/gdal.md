@@ -13,6 +13,9 @@ geometric operations with vector data.
 The current `GDAL` configuration options are obtained with
 `getGDALconfig` and changed with `setGDALconfig`.
 
+`gdal_has_pam` reports whether the linked GDAL was built with PAM
+support.
+
 `proj_ok` checks if the PROJ database with CRS definitions can be found.
 
 `projNetwork` controls whether PROJ can access network resources for
@@ -39,6 +42,7 @@ gdal(warn=NA, drivers=FALSE, ...)
 gdalCache(size=NA)
 setGDALconfig(option, value="")
 getGDALconfig(option)
+gdal_has_pam()
 clearVSIcache()
 libVersion(lib="all", parse=FALSE)
 unloadGDALdrivers(x)
@@ -69,12 +73,15 @@ projPaths(paths, with_proj = TRUE)
 
 - size:
 
-  numeric. The new cache size in MB
+  numeric. The new cache size in MB. terra sets the GDAL block cache to
+  64 MB when the package is loaded, unless environment variable
+  `GDAL_CACHEMAX` was already set. Use `gdalCache` to change it
+  afterwards
 
 - option:
 
   character. GDAL configuration option name, or a "name=value" string
-  (in which case the value argument is ignored
+  (in which case the value argument is ignored)
 
 - value:
 
@@ -83,8 +90,9 @@ projPaths(paths, with_proj = TRUE)
 
 - lib:
 
-  character. "gdal", "proj", or "geos", or any other value to get the
-  versions numbers of all three
+  character. "gdal", "proj", "geos", "TBB", or any other value to get
+  the versions numbers of the first three and a logical value indicating
+  whether TBB parallelization is available
 
 - parse:
 
@@ -126,8 +134,7 @@ file-level metadata "GDALinfo"
 
 ## Value
 
-character vector of search paths. When setting paths, the result is
-returned invisibly.
+character vector in most cases.
 
 ## Note
 
@@ -154,14 +161,14 @@ grids locally.
 
 ``` r
 gdal()
-#> [1] "3.8.4"
+#> [1] "3.12.2"
 gdal(2)
 #head(gdal(drivers=TRUE))
 libVersion("all", TRUE)
 #>      major minor sub
-#> gdal     3     8   4
-#> proj     9     4   0
-#> geos     3    12   1
+#> gdal     3    12   2
+#> proj     9     7   1
+#> geos     3    14   1
 projNetwork()
 #> [1] NA
 projPaths()

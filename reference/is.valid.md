@@ -29,7 +29,7 @@ is.valid(x)
 - as.points:
 
   logical. If `TRUE`, it is attempted to return locations where polygons
-  are invalid as a SpatVector or points
+  are invalid as a SpatVector of points
 
 - buffer:
 
@@ -58,7 +58,7 @@ is.valid(w)
 #> [1] FALSE
 is.valid(w, TRUE)
 #>   valid                                                reason
-#> 1 FALSE Self-intersection[4.54545454545454 -2.72727272727273]
+#> 1 FALSE Self-intersection[4.54545454545455 -2.72727272727273]
 v1 <- makeValid(w)
 is.valid(v1)
 #> [1] TRUE

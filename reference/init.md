@@ -3,17 +3,20 @@
 Create a SpatRaster with values reflecting a cell property: "x", "y",
 "xy", "col", "row", "cell" or "chess". Alternatively, a function can be
 used. In that case, cell values are initialized without reference to
-pre-existing values. E.g., initialize with a random number
-(`fun=`[`runif`](https://rdrr.io/r/stats/Uniform.html)). While there are
-more direct ways of achieving this for small objects (see examples) for
-which a vector with all values can be created in memory, the `init`
-function will also work for SpatRasters with many cells.
+pre-existing values. For example, use `fun=runif` to initialize cells
+with random numbers.
+
+For small objects that fit in memory, a vector containing all cell
+values can be assigned using, for instance, the
+[`values`](https://rspatial.github.io/terra/reference/values.md)
+function. The `init` function also works when the object does not fit in
+memory (by writing it directly to the disk).
 
 ## Usage
 
 ``` r
 # S4 method for class 'SpatRaster'
-init(x, fun, ..., filename="", overwrite=FALSE, wopt=list())
+init(x, fun, ..., mask=FALSE, filename="", overwrite=FALSE, wopt=list())
 ```
 
 ## Arguments
@@ -24,7 +27,7 @@ init(x, fun, ..., filename="", overwrite=FALSE, wopt=list())
 
 - fun:
 
-  function to be applied. This must be a either single number, multiple
+  function to be applied. This must be either a single number, multiple
   numbers, a function, or one of a set of known character values. A
   function must take the number of cells as a single argument to return
   a vector of values with a length equal to the number of cells, such as
@@ -35,6 +38,11 @@ init(x, fun, ..., filename="", overwrite=FALSE, wopt=list())
 - ...:
 
   additional arguments passed to `fun`
+
+- mask:
+
+  logical. If `TRUE`, cells that are `NA` in `x` (which must have
+  values) are set to `NA` in the output
 
 - filename:
 
@@ -62,4 +70,8 @@ y <- init(r, fun=runif)
 
 # initialize with a single value 
 z <- init(r, fun=8)
+
+# keep NA cells of x
+e <- rast(system.file("ex/elev.tif", package="terra"))
+lat <- init(e, fun="y", mask=TRUE)
 ```

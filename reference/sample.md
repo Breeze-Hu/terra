@@ -1,4 +1,4 @@
-# Take a regular sample
+# Take a sample from a spatial object
 
 Take a spatial sample from a SpatRaster, SpatVector or SpatExtent.
 Sampling a SpatVector or SpatExtent always returns a SpatVector of
@@ -53,7 +53,11 @@ spatSample(x, size, method="random", lonlat, as.points=FALSE, exact=FALSE)
   (each value in `x` is a probability weight), or "spread" (an
   approximately regular sample, using compact zones generated with
   [`k_means`](https://rspatial.github.io/terra/reference/k_means.md)
-  clustering of the raster cell locations)
+  clustering of the raster cell locations). An additional method for
+  `SpatRaster` is "display" which is used to quickly create a subsample
+  for mapping. It uses regular sampling but this method should not be
+  used in data analysis because the results may depend on whether the
+  data are on-disk or in-memory
 
 - replace:
 
@@ -124,8 +128,8 @@ spatSample(x, size, method="random", lonlat, as.points=FALSE, exact=FALSE)
 
 - exhaustive:
 
-  logical. If `TRUE` and (`method=="random"` and `na.rm=TRUE`) or
-  `method=="stratified"`, all cells that are not `NA` are determined and
+  logical. If `TRUE` and (`method="random"` and `na.rm=TRUE`) or
+  `method="stratified"`, all cells that are not `NA` are determined and
   a sample is taken from these cells. This is useful when you are
   dealing with a very large raster that is sparse (most cells are `NA`).
   Otherwise, the default approach may not find enough samples. This
@@ -134,20 +138,20 @@ spatSample(x, size, method="random", lonlat, as.points=FALSE, exact=FALSE)
 
 - exact:
 
-  logical. If `TRUE` and `method=="regular"`, the sample returned is
+  logical. If `TRUE` and `method="regular"`, the sample returned is
   exactly `size`, perhaps at the expense of some regularity. Otherwise
   you get at least `size` many samples. Ignored for lon/lat rasters
 
 - each:
 
-  logical. If `TRUE` and `method=="stratified"`, the sample returned is
+  logical. If `TRUE` and `method="stratified"`, the sample returned is
   `size` for each stratum. Otherwise `size` is the total sample size
 
 - ...:
 
   additional arguments passed to
   [`k_means`](https://rspatial.github.io/terra/reference/k_means.md)
-  when `method="kmeans"`
+  when `method="spread"`
 
 - strata:
 

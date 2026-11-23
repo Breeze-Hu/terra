@@ -57,7 +57,7 @@ zonal(x, z, fun=mean, ..., weighted=FALSE, as.polygons=FALSE)
 
 - wide:
 
-  logical. Should the values returned in a wide format? For the
+  logical. Should the values be returned in a wide format? For the
   `SpatRaster, SpatRaster` method this only affects the results when
   `nlyr(z) == 2`. For the `SpatRaster, SpatVector` method this only
   affects the results when `fun=table`
@@ -69,7 +69,7 @@ zonal(x, z, fun=mean, ..., weighted=FALSE, as.polygons=FALSE)
 
 - filename:
 
-  character. Output filename (ignored if `as.raster=FALSE`
+  character. Output filename (ignored if `as.raster=FALSE`)
 
 - overwrite:
 
@@ -82,12 +82,12 @@ zonal(x, z, fun=mean, ..., weighted=FALSE, as.polygons=FALSE)
 
 - weights:
 
-  logical. If `TRUE` and `y` has polygons, the approximate fraction of
+  logical. If `TRUE` and `z` has polygons, the approximate fraction of
   each cell that is covered is used to compute a weighted mean
 
 - exact:
 
-  logical. If `TRUE` and `y` has polygons, the exact fraction of each
+  logical. If `TRUE` and `z` has polygons, the exact fraction of each
   cell that is covered is returned as well, for example to compute a
   weighted mean
 
@@ -108,8 +108,8 @@ zonal(x, z, fun=mean, ..., weighted=FALSE, as.polygons=FALSE)
 
   logical. If `TRUE`, a weighted.mean is computed and `fun` is ignored.
   Weights are based on the length of the lines or the area of the
-  polygons in `x` that intersect with `z`. This argument is ignored of
-  `x` is a SpatVector or points
+  polygons in `x` that intersect with `z`. This argument is ignored if
+  `x` is a SpatVector of points
 
 - as.polygons:
 
@@ -224,16 +224,16 @@ values(p) <- data.frame(b2=1:100, ssep1=100:1)
 
 zonal(p, v, mean)
 #>    zone       b2    ssep1
-#> 1     1 55.00000 46.00000
-#> 2     2 53.70000 47.30000
-#> 3     3 38.16667 62.83333
-#> 4     4 50.75000 50.25000
-#> 5     5 55.27273 45.72727
-#> 6     6 43.40000 57.60000
-#> 7     7 41.80000 59.20000
-#> 8     8 53.42857 47.57143
-#> 9     9 53.80000 47.20000
-#> 10   10 43.00000 58.00000
-#> 11   11 60.38462 40.61538
-#> 12   12 49.00000 52.00000
+#> 1     1 50.38462 50.61538
+#> 2     2 62.87500 38.12500
+#> 3     3 36.00000 65.00000
+#> 4     4 41.50000 59.50000
+#> 5     5 49.40000 51.60000
+#> 6     6 39.42857 61.57143
+#> 7     7 81.00000 20.00000
+#> 8     8 52.00000 49.00000
+#> 9     9 49.57143 51.42857
+#> 10   10 56.00000 45.00000
+#> 11   11 43.66667 57.33333
+#> 12   12 57.66667 43.33333
 ```

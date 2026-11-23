@@ -7,7 +7,7 @@ PEM4PIT terrain erosion model.
 
 ``` r
 # S4 method for class 'SpatRaster'
-pitfiller(x, pit = NULL, flowdir = NULL, niter = 10, lambda = 0,
+pitfiller(x, pit, flowdir, niter = 10, lambda = 0,
                  deviation_type = "lad", max_iters=10^6, U = 1, D = 300, beta = 0.9,
                  theta_exp = 0.5, filename = "", ...)
 ```
@@ -20,31 +20,30 @@ pitfiller(x, pit = NULL, flowdir = NULL, niter = 10, lambda = 0,
 
 - pit:
 
-  SpatRaster with pits. See
+  SpatRaster with pits identified with values \> 0. See
   [`pitfinder`](https://rspatial.github.io/terra/reference/pitfinder.md)
 
 - flowdir:
 
-  SpatRaster with flow direction or `NULL`. If `NULL`, it is calculated
-  internally. See
+  SpatRaster with flow direction. See
   [`flowDir`](https://rspatial.github.io/terra/reference/flowDir.md)
 
 - niter:
 
-  Number of iterations. Default is 10
+  Number of iterations
 
 - lambda:
 
-  Deviation parameter. Default is 0
+  Deviation parameter
 
 - deviation_type:
 
-  Type of deviation. Default is `"lad"`. See
+  Type of deviation. See
   [`flowDir`](https://rspatial.github.io/terra/reference/flowDir.md)
 
 - max_iters:
 
-  maximum iterations for drainage path starting points detection.See
+  Maximum iterations for drainage path starting points detection. See
   [`flowDir`](https://rspatial.github.io/terra/reference/flowDir.md)
 
 - U:
@@ -154,43 +153,17 @@ Emanuele Cordano
 ## Examples
 
 ``` r
-f <- system.file("ex/elev.tif", package = "terra")
-elev <- rast(f) |> project(y = "epsg:32632")
+elev <- rast(system.file("ex/elev.tif", package = "terra"))
+elev <- project(elev, "epsg:32632")
 
 lambda <- 0.5 ## try also 0 (default)
 flowdir <- flowDir(elev, lambda = lambda)
 pits <- pitfinder(flowdir, pits_on_boundary = FALSE)
-elev2 <- pitfiller(x = elev, pit = pits,lambda=lambda)
-#> class       : SpatRaster
-#> size        : 111, 78, 1  (nrow, ncol, nlyr)
-#> resolution  : 772.033, 772.033  (x, y)
-#> extent      : 263811.2, 324029.8, 5479328, 5565024  (xmin, xmax, ymin, ymax)
-#> coord. ref. : WGS 84 / UTM zone 32N (EPSG:32632)
-#> source(s)   : memory
-#> name        : flowdir_ltd_l=0.5
-#> min value   :                 0
-#> max value   :               112
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
-#> 
-#> Exceeding number of iterations in d8ltd/d8lad flow directions computation
+fill <- pitfiller(elev, pits, flowdir, lambda=lambda)
+
+elev2 <- pitfiller(x = elev, pit = pits, flowdir = flowdir, lambda = lambda)
 flowdir2 <- terrain(elev2, "flowdir")
 flowdir2 <- flowDir(elev2, lambda = lambda)
-pits2 <- pitfinder(flowdir, pits_on_boundary = FALSE)
+pits2 <- pitfinder(flowdir2, pits_on_boundary = FALSE)
+fill2 <- pitfiller(elev, pits2, flowdir2, lambda=lambda)
 ```

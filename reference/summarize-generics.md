@@ -54,9 +54,6 @@ all(x, ..., na.rm=FALSE)
 nany(x, ..., na.rm=FALSE)
 
 # S4 method for class 'SpatRaster'
-range(x, ..., na.rm=FALSE)
-
-# S4 method for class 'SpatRaster'
 which.min(x)
 
 # S4 method for class 'SpatRaster'
@@ -133,7 +130,7 @@ layers, `max(x, 5)` will return a single layer (the number five is
 treated as a layer in which all cells have value five). In contrast
 `max(x, 5, par=TRUE)` returns three layers (the number five is treated
 as another SpatRaster with a single layer with all cells having the
-value five.
+value five).
 
 ## See also
 
@@ -213,8 +210,8 @@ is.na(r)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
 #> source(s)   : memory
 #> names       : lyr.1, lyr.2, lyr.3
-#> min values  :     0,     0,     0
-#> max values  :     1,     1,     1
+#> min values  : FALSE, FALSE, FALSE
+#> max values  :  TRUE,  TRUE,  TRUE
 anyNA(r)
 #> class       : SpatRaster
 #> size        : 10, 10, 1  (nrow, ncol, nlyr)
@@ -222,9 +219,9 @@ anyNA(r)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
 #> source(s)   : memory
-#> name        : lyr1
-#> min value   :    0
-#> max value   :    1
+#> name        :  lyr1
+#> min value   : FALSE
+#> max value   :  TRUE
 allNA(r)
 #> class       : SpatRaster
 #> size        : 10, 10, 1  (nrow, ncol, nlyr)
@@ -232,9 +229,9 @@ allNA(r)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
 #> source(s)   : memory
-#> name        : lyr1
-#> min value   :    0
-#> max value   :    1
+#> name        :  lyr1
+#> min value   : FALSE
+#> max value   :  TRUE
 countNA(r)
 #> class       : SpatRaster
 #> size        : 10, 10, 1  (nrow, ncol, nlyr)
@@ -252,7 +249,7 @@ countNA(r, 2)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
 #> source(s)   : memory
-#> name        : lyr1
-#> min value   :    0
-#> max value   :    1
+#> name        :  lyr1
+#> min value   : FALSE
+#> max value   :  TRUE
 ```

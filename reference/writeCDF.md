@@ -15,6 +15,20 @@ See [`depth`](https://rspatial.github.io/terra/reference/depth.md) and
 [`time`](https://rspatial.github.io/terra/reference/time.md) for
 specifying the axes of the third and/or fourth dimension(s).
 
+Factor layers
+([`is.factor`](https://rspatial.github.io/terra/reference/is.bool.md))
+are written with the CF attributes `flag_values` and `flag_meanings`,
+taken from
+[`levels`](https://rspatial.github.io/terra/reference/factors.md).
+Reading the file with
+[`rast`](https://rspatial.github.io/terra/reference/rast.md) or
+[`sds`](https://rspatial.github.io/terra/reference/sds.md) restores
+those categories. A NetCDF variable has one set of categories, shared by
+all of its layers. Use `split=TRUE` when layers of one SpatRaster do not
+share categories. Additional columns of
+[`cats`](https://rspatial.github.io/terra/reference/factors.md) are not
+stored.
+
 ## Usage
 
 ``` r
@@ -100,7 +114,8 @@ writeCDF(x, filename, overwrite=FALSE, timename="time", atts="",
 
 ## Value
 
-SpatRaster or SpatDataSet
+SpatRaster or SpatRasterDataset. This function is used for the
+side-effect of writing values to a file.
 
 ## See also
 
@@ -147,15 +162,13 @@ s <- sds(r1, r2)
 names(s) <- c("TH", "DBZH")
 units(s) <- c("-", "Pa")
 x <- writeCDF(s, filename = fname, overwrite=TRUE)
-#> Warning: GDAL Message 1: dimension #1 (time) is not a Time dimension.
-#> Warning: GDAL Message 1: dimension #0 (height) is not a Time dimension.
 x[1]
 #> class       : SpatRaster
 #> size        : 5, 5, 4  (nrow, ncol, nlyr)
 #> resolution  : 72, 36  (x, y)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
-#> source      : file224c2a7b65cd.nc:TH
+#> source      : file23af1d1e4e3d.nc:TH
 #> varname     : TH
 #> names       : TH_angle=0_1, TH_angle=2_1, TH_angle=0_2, TH_angle=2_2
 #> unit        : -
@@ -172,7 +185,7 @@ x[2]
 #> resolution  : 72, 36  (x, y)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)
-#> source      : file224c2a7b65cd.nc:DBZH
+#> source      : file23af1d1e4e3d.nc:DBZH
 #> varname     : DBZH
 #> names       : DBZH_~=10_1, DBZH_~=10_2, DBZH_~=20_1, DBZH_~=20_2, DBZH_~=30_1, DBZH_~=30_2
 #> unit        : Pa
